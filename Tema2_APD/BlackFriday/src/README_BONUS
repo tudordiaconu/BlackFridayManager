@@ -1,0 +1,14 @@
+Pentru citirea din fisierul "orders.txt" in "bucati de bytes", am calculat
+dimensiunea fisierului de intrare la inceput. Apoi, am impartit aceasta
+dimensiune la numarul de thread-uri pentru a vedea cati bytes ar trebui
+, in teorie, sa citeasca fiecare thread.
+
+In momentul in care un thread incepe citirea, isi seteaza offset-ul, calculat
+in functie de id-ul sau (ordinea in care a fost creat), si citeste capacitatea
+teoretica de bytes. Insa, daca la finalul citirii nu se afla la finalul unei linii,
+adica ultimul byte nu este '\n', va continua sa citeasca pana va ajunge la finalul liniei,
+urmand ca urmatorul thread sa sara la urmatoarea linie, aceste caractere nefiind citite de
+2 ori.
+
+Astfel, sunt gestionate conflictele si este realizata o impartire optima a
+fisierului la numarul de thread-uri.

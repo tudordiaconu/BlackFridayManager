@@ -1,0 +1,36 @@
+Copyright 2023 Diaconu Tudor-Gabriel
+
+Tema 2 APD 2022-2023 <-> BLACK FRIDAY
+
+Pentru implementarea acestei teme, am folosit 2 tipuri de thread-uri, unul
+pentru comenzi (OrderThread) si unul pentru produse (ProductThread).
+
+In fisierul principal(Tema2), initial sunt golite fisierele de iesire, 
+pentru a nu scrie in continuarea a ce ar putea fi fost scris precedent. De
+asemenea, am creat thread-urile pentru comenzi si ExecutorService-ul pe care
+il folosesc pentru thread-urile pentru produse. Nu in ultimul rand, in acest fisier
+am calculat dimensiunea fisierului de intrare al comenzilor si cantitatea de bytes
+care ar trebui sa fie citita de fiecare thread de comenzi pentru a putea realiza
+bonusul.(mai multe detalii in README_BONUS)
+La final, dupa ce thread-urile de comanda si-au incheiat scrierea, este inchis
+ExecutorService-ul, intrucat nu mai este nevoie de el.
+
+In thread-ul pentru comenzi(OrderThread), functia acestuia este cea de a citi
+"bucati de bytes" din fisierul de intrare al comenzilor (detalii in README_BONUS),
+apoi extrage fiecare comanda si creaaza cate un task pentru fiecare produs al fiecarei
+comenzi. De asemenea, prin intermediul unei variabile atomice, numaram cate produse
+ale acelei comenzi au fost livrate. Prin intermediul unui while, fortam ca acest thread
+de comanda sa astepte pana cand toate produsele acelei comenzi au fost livrate, iar in
+momentul in care acestea au fost livrate, marcam comanda livrata.
+
+In thread-ul pentru produse(ProductThread), vom cauta in fisierul de intrare
+al produselor un produs care apartine comenzii al carei thread a creat task-ul.
+De asemenea, verificarea neexplicita daca produsul pe care il gasim a fost deja
+livrat este realizata prin trimiterea ca parametru la thread a id-ului produsului si
+livrarea acestuia doar daca un contor anume este 0. Daca contorul nu este 0 si dam de
+un produs al comenzii cautate, inseamna ca produsul gasit a fost deja livrat. De asemenea,
+cand livram un produs, incrementam acea variabila atomica pentru a marca thread-ului de
+comanda.
+
+Feedback tema: O tema foarte interesanta, care m-a ajutat sa inteleg mai bine
+conceptele de multithreading in Java.
